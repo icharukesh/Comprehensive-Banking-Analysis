@@ -1,49 +1,19 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-
-
-# In[2]:
-
 
 #Loading the dataset
 df=pd.read_csv("C:/Users/S.ICHARUKESH/Downloads/train.csv")
 df.head()
 
-
-# In[3]:
-
-
 #Exploratory Data Analysis(EDA)
 df.info()
 
-
-# In[4]:
-
-
 df.shape
-
-
-# In[5]:
-
 
 df.isnull().sum()
 
-
-# In[7]:
-
-
 df['Credit_Score'].value_counts()
-
-
-# In[8]:
-
 
 #Label Encoding for Categorical Columns
 
@@ -60,15 +30,7 @@ scaler=StandardScaler()
 num_cols=df.select_dtypes(include=['int64','float64']).columns
 df[num_cols]=scaler.fit_transform(df[num_cols])
 
-
-# In[26]:
-
-
 df.head(3)
-
-
-# In[9]:
-
 
 #Customer Segmentation(Clustering)
 
@@ -90,18 +52,10 @@ plt.title("Elbow Method for K")
 plt.xlabel("Number of clusters")
 plt.ylabel("SSE")
 
-
-# In[10]:
-
-
 #Customer Segmentation(Clustering)
 k=3
 km=KMeans(n_clusters=k,random_state=42)
 df['Cluster']=km.fit_predict(clus_features)
-
-
-# In[11]:
-
 
 #Visualizing Clustering
 
@@ -111,10 +65,6 @@ plt.title("Customer Segmentation : Annual_Income vs Monthly_Inhand_Salary")
 plt.xlabel("Annual_Income")
 plt.ylabel("Monthly_Inhand_Salary")
 plt.show()
-
-
-# In[41]:
-
 
 #Credit Risk Assessment : Classification
 
@@ -126,28 +76,12 @@ y_class=df['Credit_Score']
 
 X_train, X_test, y_train, y_test =train_test_split(x_class,y_class,test_size=0.2,random_state=42)
 
-
-# In[42]:
-
-
 model_rf=RandomForestClassifier(n_estimators=50,random_state=42)
 model_rf.fit(X_train,y_train)
 
-
-# In[14]:
-
-
 model_rf.predict(X_test)
 
-
-# In[43]:
-
-
 model_rf.score(X_test,y_test)
-
-
-# In[21]:
-
 
 #Visualization for Classification
 
@@ -158,10 +92,6 @@ sns.barplot(x=feature_names,y=importance,palette='coolwarm')
 plt.title('Feature Importance in Credit Risk Assessment')
 plt.xlabel('Feature_Names')
 plt.ylabel('Importance')
-
-
-# In[36]:
-
 
 #Performace Prediction:Regression
 
@@ -175,10 +105,6 @@ model_le=LinearRegression()
 model_le.fit(X_train,y_train)
 y_pred= model_le.predict(X_test)
 
-
-# In[37]:
-
-
 # Regression Visualization
 plt.figure(figsize=(10, 6))
 sns.scatterplot(x=y_test, y=y_pred, alpha=0.7, color='blue')
@@ -186,4 +112,3 @@ plt.title('Actual vs Monthly Balance')
 plt.xlabel('Actual Monthly Balance')
 plt.ylabel('Predicted Monthly Balance')
 plt.show()
-
